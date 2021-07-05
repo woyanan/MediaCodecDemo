@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MediaCodecDemo</string>
+    <string name="video_example">MP4 Video example</string>
+</resources>
