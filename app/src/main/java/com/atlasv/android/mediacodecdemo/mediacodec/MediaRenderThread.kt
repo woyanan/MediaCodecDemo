@@ -1,4 +1,4 @@
-package tech.thdev.mediacodecexample.video
+package com.atlasv.android.mediacodecdemo.mediacodec
 
 import android.util.Log
 

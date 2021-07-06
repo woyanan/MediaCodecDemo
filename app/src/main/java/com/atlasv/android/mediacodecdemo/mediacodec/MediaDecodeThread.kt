@@ -1,4 +1,4 @@
-package tech.thdev.mediacodecexample.video
+package com.atlasv.android.mediacodecdemo.mediacodec
 
 /**
  * Created by woyanan on 2021/7/1
@@ -16,6 +16,7 @@ class MediaDecodeThread(private val mediaCodecDecode: MediaCodecDecoder?) : Thre
                 continue
             }
             mediaCodecDecode?.queueInputBuffer()
+//            mediaCodecDecode?.
         }
     }
 

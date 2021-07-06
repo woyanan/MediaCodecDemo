@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo
+package com.atlasv.android.mediacodecdemo.mediacodec
 
 import android.content.Context
 import android.content.Intent
@@ -8,9 +8,7 @@ import android.view.SurfaceView
 import android.widget.Button
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import tech.thdev.mediacodecexample.video.MediaCodecDecoder
-import tech.thdev.mediacodecexample.video.MediaDecodeThread
-import tech.thdev.mediacodecexample.video.MediaRenderThread
+import com.atlasv.android.mediacodecdemo.R
 
 
 class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback {
@@ -37,21 +35,19 @@ class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video_decode)
+        setContentView(R.layout.activity_video)
         surfaceView = findViewById(R.id.surfaceView)
         seekbar = findViewById(R.id.seekbar)
         pause = findViewById(R.id.pause)
         surfaceView?.holder?.addCallback(this@VideoActivity)
-//        videoDecode = VideoDecodeThread()
         mediaCodecDecode = MediaCodecDecoder()
+
         pause?.setOnClickListener {
-//            videoDecode?.pause()
             mediaDecodeThread.pause()
             mediaRenderThread.pause()
         }
         seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-//                videoDecode?.seekTo(p1)
                 mediaDecodeThread.seekTo(p1)
                 mediaRenderThread.seekTo(p1)
             }
@@ -70,25 +66,21 @@ class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
         if (mediaCodecDecode?.init(holder.surface) == true) {
-//            videoDecode?.start()
             mediaDecodeThread.start()
             mediaRenderThread.start()
         } else {
-//            videoDecode = null
             mediaCodecDecode = null
         }
 
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-//        videoDecode?.close()
         mediaDecodeThread.close()
         mediaRenderThread.close()
     }
 
     override fun onPause() {
         super.onPause()
-//        videoDecode?.close()
         mediaDecodeThread.pause()
         mediaRenderThread.pause()
     }

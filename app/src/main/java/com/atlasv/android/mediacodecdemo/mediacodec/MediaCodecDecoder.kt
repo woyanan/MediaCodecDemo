@@ -1,10 +1,11 @@
-package tech.thdev.mediacodecexample.video
+package com.atlasv.android.mediacodecdemo.mediacodec
 
 import android.media.MediaCodec
 import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.util.Log
 import android.view.Surface
+
 
 /**
  * Created by woyanan on 2021/7/1

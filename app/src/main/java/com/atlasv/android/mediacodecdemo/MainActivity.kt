@@ -8,6 +8,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.atlasv.android.mediacodecdemo.databinding.ActivityMainBinding
+import com.atlasv.android.mediacodecdemo.mediacodec.VideoActivity
+import com.atlasv.android.mediacodecdemo.surfacetexture.VideoActivity2
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -36,6 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonVideoExample.setOnClickListener { view ->
             startActivity(VideoActivity.start(view.context))
+        }
+        binding.buttonVideoExample2.setOnClickListener { view ->
+            startActivity(VideoActivity2.start(view.context))
         }
         if (!hasPermissions(this, REQUIRED_PERMISSIONS)) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
