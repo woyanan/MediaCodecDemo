@@ -8,19 +8,19 @@ import android.util.AttributeSet
  * Created by woyanan on 2021/7/6
  */
 class VideoGLSurfaceView : GLSurfaceView {
-    var render: VideoRender
+    var render: VideoRender2
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
         setEGLContextClientVersion(2)
-        render = VideoRender(context)
+        render = VideoRender2(context)
         setRenderer(render)
-        renderMode = RENDERMODE_WHEN_DIRTY
-        render.onRenderListener = object : OnRenderListener {
-            override fun onRender() {
-                requestRender()
-            }
-        }
+//        renderMode = RENDERMODE_WHEN_DIRTY
+//        render.onRenderListener = object : OnRenderListener {
+//            override fun onRender() {
+//                requestRender()
+//            }
+//        }
     }
 
 }

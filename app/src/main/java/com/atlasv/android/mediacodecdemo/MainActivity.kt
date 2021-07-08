@@ -2,6 +2,7 @@ package com.atlasv.android.mediacodecdemo
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,6 +11,8 @@ import androidx.core.content.ContextCompat
 import com.atlasv.android.mediacodecdemo.databinding.ActivityMainBinding
 import com.atlasv.android.mediacodecdemo.mediacodec.VideoActivity
 import com.atlasv.android.mediacodecdemo.surfacetexture.VideoActivity2
+import com.atlasv.android.mediacodecdemo.surfacetexture.VideoActivity3
+import com.atlasv.android.mediacodecdemo.surfacetexture2.NavigatorActivity
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -42,6 +45,13 @@ class MainActivity : AppCompatActivity() {
         binding.buttonVideoExample2.setOnClickListener { view ->
             startActivity(VideoActivity2.start(view.context))
         }
+        binding.buttonVideoExample3.setOnClickListener { view ->
+            startActivity(VideoActivity3.start(view.context))
+        }
+        binding.buttonVideoExample4.setOnClickListener { view ->
+            startActivity(Intent(view.context, NavigatorActivity::class.java))
+        }
+
         if (!hasPermissions(this, REQUIRED_PERMISSIONS)) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
         }

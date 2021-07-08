@@ -1,24 +1,27 @@
-package com.atlasv.android.mediacodecdemo.mediacodec
+package com.atlasv.android.mediacodecdemo.surfacetexture
 
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
-import android.view.SurfaceHolder
+import android.view.Surface
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.atlasv.android.mediacodecdemo.R
-import kotlinx.android.synthetic.main.activity_video.*
+import com.atlasv.android.mediacodecdemo.mediacodec.MediaCodecDecoder
+import com.atlasv.android.mediacodecdemo.mediacodec.MediaDecodeThread
+import com.atlasv.android.mediacodecdemo.mediacodec.MediaRenderThread
+import kotlinx.android.synthetic.main.activity_video2.*
 
-
-class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback {
-
+/**
+ * Created by woyanan on 2021/7/8
+ */
+class VideoActivity3 : AppCompatActivity() {
     companion object {
-
-        fun start(context: Context): Intent =
-            Intent(context, VideoActivity::class.java)
+        fun start(context: Context) = Intent(context, VideoActivity3::class.java)
     }
 
-    //    private var videoDecode: VideoDecodeThread? = null
     private var mediaCodecDecode: MediaCodecDecoder? = null
     private val mediaDecodeThread by lazy {
         MediaDecodeThread(mediaCodecDecode)
@@ -29,10 +32,8 @@ class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video)
-        surfaceView?.holder?.addCallback(this@VideoActivity)
-        mediaCodecDecode = MediaCodecDecoder()
-
+        setContentView(R.layout.activity_video2)
+        setupMediaCodec()
         pause?.setOnClickListener {
             mediaDecodeThread.pause()
             mediaRenderThread.pause()
@@ -51,23 +52,21 @@ class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback {
         })
     }
 
-    override fun surfaceCreated(holder: SurfaceHolder) {
-
-    }
-
-    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        if (mediaCodecDecode?.init(holder.surface) == true) {
-            mediaDecodeThread.start()
-            mediaRenderThread.start()
-        } else {
-            mediaCodecDecode = null
+    /**
+     * MediaCodec
+     */
+    private fun setupMediaCodec() {
+        mediaCodecDecode = MediaCodecDecoder()
+        surfaceView?.render?.onSurfaceChanged = {
+            val surface = Surface(surfaceView?.render?.videoTexture)
+            if (mediaCodecDecode?.init(surface) == true) {
+                mediaDecodeThread.start()
+                mediaRenderThread.start()
+            } else {
+                mediaCodecDecode = null
+            }
+            surface.release()
         }
-
-    }
-
-    override fun surfaceDestroyed(holder: SurfaceHolder) {
-        mediaDecodeThread.close()
-        mediaRenderThread.close()
     }
 
     override fun onPause() {
@@ -75,4 +74,5 @@ class VideoActivity : AppCompatActivity(), SurfaceHolder.Callback {
         mediaDecodeThread.pause()
         mediaRenderThread.pause()
     }
+
 }

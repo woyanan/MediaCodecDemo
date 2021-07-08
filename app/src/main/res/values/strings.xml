@@ -2,4 +2,6 @@
     <string name="app_name">MediaCodecDemo</string>
     <string name="video_example">MP4 Video example</string>
     <string name="video_example2">MP4 Video example2</string>
+    <string name="video_example3">MP4 Video example3</string>
+    <string name="video_example4">MP4 Video example4</string>
 </resources>
