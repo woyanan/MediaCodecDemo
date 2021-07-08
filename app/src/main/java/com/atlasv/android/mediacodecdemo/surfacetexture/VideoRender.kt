@@ -20,7 +20,7 @@ import javax.microedition.khronos.opengles.GL10
 /**
  * Created by woyanan on 2021/7/7
  */
-class VideoRender2(val context: Context) : GLSurfaceView.Renderer,
+class VideoRender(val context: Context) : GLSurfaceView.Renderer,
     SurfaceTexture.OnFrameAvailableListener {
     private var shaderProgram = 0
     private var textureParamHandle = 0
