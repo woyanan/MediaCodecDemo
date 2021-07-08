@@ -40,6 +40,9 @@ class VideoActivity4 : AppCompatActivity() {
             override fun onStopTrackingTouch(p0: SeekBar?) {
             }
         })
+        decodeThread.onNotifyChange = {
+            seekbar?.progress = it
+        }
     }
 
     /**

@@ -32,6 +32,8 @@ class DecodeThread : Thread() {
     private var isSeeking = false
     private var seekTimeUs = 0L
 
+    var onNotifyChange: ((Int) -> Unit)? = null
+
     fun init(surface: Surface): Boolean {
         isStop = false
         kotlin.runCatching {
@@ -99,19 +101,23 @@ class DecodeThread : Thread() {
                 }
                 else -> {
                     val isRender = outIndex != 0
+                    val presentationTimeUs = outputBufferInfo.presentationTimeUs
                     if (isSeeking) {
                         // seek时按顺序解码, 但是跳帧显示, 100ms显示一帧
-                        if (outputBufferInfo.presentationTimeUs < seekTimeUs) {
+                        if (presentationTimeUs < seekTimeUs) {
                             decoder.releaseOutputBuffer(outIndex, false)
                             continue
                         }
                     } else {
                         if (isRender) {
-                            decodeController.preRender(outputBufferInfo.presentationTimeUs)
+                            decodeController.preRender(presentationTimeUs)
                         }
                     }
 
                     decoder.releaseOutputBuffer(outIndex, isRender)
+
+                    val progress = (presentationTimeUs.toDouble() / durationUs) * 100
+                    onNotifyChange?.invoke(progress.toInt())
                 }
             }
             isSeeking = false

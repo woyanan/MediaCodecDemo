@@ -45,7 +45,6 @@ class DecodeController {
                     sleepTimeUs = 500000
                 }
                 kotlin.runCatching {
-                    println("----------------->sleepTimeUs: $sleepTimeUs")
                     Thread.sleep(sleepTimeUs / 1000, (sleepTimeUs % 1000).toInt() * 1000)
                 }
                 nowUs = System.nanoTime() / 1000
