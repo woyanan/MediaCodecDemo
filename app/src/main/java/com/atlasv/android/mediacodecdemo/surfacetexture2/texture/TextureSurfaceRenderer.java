@@ -15,11 +15,11 @@ import javax.microedition.khronos.egl.EGLSurface;
 /**
  * 绘制前，renderer的配置，初始化EGL，开始一个绘制线程.
  * 这个类需要子类去实现相应的绘制工作.
- *
+ * <p>
  * 具体流程可以参考http://www.cnblogs.com/kiffa/archive/2013/02/21/2921123.html
  * 相应的函数可以查看： https://www.khronos.org/registry/egl/sdk/docs/man/
  */
-public abstract class TextureSurfaceRenderer implements Runnable{
+public abstract class TextureSurfaceRenderer implements Runnable {
     public static String LOG_TAG = TextureSurfaceRenderer.class.getSimpleName();
 
     protected final SurfaceTexture surfaceTexture;
@@ -39,7 +39,7 @@ public abstract class TextureSurfaceRenderer implements Runnable{
 
     public TextureSurfaceRenderer(SurfaceTexture surfaceTexture, int width, int height) {
         this.surfaceTexture = surfaceTexture;
-        Log.e("TAG", "surfaceTexture obj="+ surfaceTexture.toString());
+        Log.e("TAG", "surfaceTexture obj=" + surfaceTexture.toString());
         this.width = width;
         this.height = height;
         this.running = true;
@@ -64,7 +64,7 @@ public abstract class TextureSurfaceRenderer implements Runnable{
     }
 
     private void initEGL() {
-        egl = (EGL10)EGLContext.getEGL();
+        egl = (EGL10) EGLContext.getEGL();
         //获取显示设备
         eglDisplay = egl.eglGetDisplay(EGL10.EGL_DEFAULT_DISPLAY);
         //version中存放EGL 版本号，int[0]为主版本号，int[1]为子版本号
@@ -83,9 +83,9 @@ public abstract class TextureSurfaceRenderer implements Runnable{
                 throw new RuntimeException("GL error:" + GLUtils.getEGLErrorString(egl.eglGetError()));
             }
             if (!egl.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)) {
-                throw new RuntimeException("GL Make current Error"+ GLUtils.getEGLErrorString(egl.eglGetError()));
+                throw new RuntimeException("GL Make current Error" + GLUtils.getEGLErrorString(egl.eglGetError()));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -108,12 +108,14 @@ public abstract class TextureSurfaceRenderer implements Runnable{
      * 通常在Opengl context 初始化以后被调用，需要子类去实现
      */
     protected abstract void initGLComponents();
+
     protected abstract void deinitGLComponents();
 
     public abstract SurfaceTexture getVideoTexture();
 
     /**
      * 为当前渲染的API创建一个渲染上下文
+     *
      * @return a handle to the context
      */
     private EGLContext createContext(EGL10 egl, EGLDisplay eglDisplay, EGLConfig eglConfig) {
@@ -135,9 +137,8 @@ public abstract class TextureSurfaceRenderer implements Runnable{
         int confSize = 1;
 
         if (!egl.eglChooseConfig(eglDisplay, attributes, configs, confSize, configsCount)) {    //获取满足attributes的config个数
-            throw new IllegalArgumentException("Failed to choose config:"+ GLUtils.getEGLErrorString(egl.eglGetError()));
-        }
-        else if (configsCount[0] > 0) {
+            throw new IllegalArgumentException("Failed to choose config:" + GLUtils.getEGLErrorString(egl.eglGetError()));
+        } else if (configsCount[0] > 0) {
             return configs[0];
         }
 
@@ -147,15 +148,14 @@ public abstract class TextureSurfaceRenderer implements Runnable{
     /**
      * 构造绘制需要的特性列表,ARGB,DEPTH...
      */
-    private int[] getAttributes()
-    {
-        return new int[] {
+    private int[] getAttributes() {
+        return new int[]{
                 EGL10.EGL_RENDERABLE_TYPE, EGL14.EGL_OPENGL_ES2_BIT,  //指定渲染api类别
                 EGL10.EGL_RED_SIZE, 8,
                 EGL10.EGL_GREEN_SIZE, 8,
                 EGL10.EGL_BLUE_SIZE, 8,
                 EGL10.EGL_ALPHA_SIZE, 8,
-                EGL10.EGL_DEPTH_SIZE, 16,			/*default depth buffer 16 choose a RGB_888 surface */
+                EGL10.EGL_DEPTH_SIZE, 16,            /*default depth buffer 16 choose a RGB_888 surface */
                 EGL10.EGL_STENCIL_SIZE, 0,
                 EGL10.EGL_NONE      //总是以EGL10.EGL_NONE结尾
         };
@@ -164,13 +164,12 @@ public abstract class TextureSurfaceRenderer implements Runnable{
     /**
      * Call when activity pauses. This stops the rendering thread and deinitializes OpenGL.
      */
-    public void onPause()
-    {
+    public void onPause() {
         running = false;
     }
-    
+
     @Override
-    protected  void finalize() throws Throwable {
+    protected void finalize() throws Throwable {
         super.finalize();
         running = false;
     }

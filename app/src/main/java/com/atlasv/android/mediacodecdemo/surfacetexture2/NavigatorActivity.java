@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.atlasv.android.mediacodecdemo.R;
 import com.atlasv.android.mediacodecdemo.surfacetexture2.texture.TextureViewMediaActivity;
 
+/**
+ * PlayVideo-OpenGL
+ */
 public class NavigatorActivity extends AppCompatActivity implements View.OnClickListener {
 
     Intent mIntent;

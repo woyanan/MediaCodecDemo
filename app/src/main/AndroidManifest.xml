@@ -27,6 +27,7 @@
         <activity android:name=".mediacodec.VideoActivity" />
         <activity android:name=".surfacetexture.VideoActivity2" />
         <activity android:name=".surfacetexture.VideoActivity3" />
+        <activity android:name=".surfacetexture.VideoActivity4" />
         <activity android:name=".surfacetexture2.NavigatorActivity" />
         <activity android:name=".surfacetexture2.NativeMediaActivity" />
         <activity android:name=".surfacetexture2.GLViewMediaActivity" />
