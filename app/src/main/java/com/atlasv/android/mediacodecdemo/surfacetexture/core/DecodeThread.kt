@@ -21,9 +21,9 @@ class DecodeThread : Thread() {
     private lateinit var decoder: MediaCodec
     private val decodeController by lazy { DecodeController() }
 
-    private val outputBufferInfo = MediaCodec.BufferInfo()
     private var isStop = false
     private var isPause = false
+    private val isLoop = true
 
     private var durationUs = 0L
 
@@ -60,6 +60,7 @@ class DecodeThread : Thread() {
         var isInputDone = false
         var isOutputDone = false
 
+        var outputBufferInfo = MediaCodec.BufferInfo()
         while (!isOutputDone) {
             if (isStop) {
                 break
@@ -86,12 +87,14 @@ class DecodeThread : Thread() {
                         isInputDone = true
                     } else {
                         decoder.queueInputBuffer(index, 0, sampleSize, extractor.sampleTime, 0)
+                        Log.d(TAG, "InputBuffer advance")
                         extractor.advance()
                     }
                 }
             }
 
             val outIndex = decoder.dequeueOutputBuffer(outputBufferInfo, 1000)
+            Log.d(TAG, "outIndex: $outIndex")
             when (outIndex) {
                 MediaCodec.INFO_OUTPUT_FORMAT_CHANGED -> {
                     Log.d(TAG, "INFO_OUTPUT_FORMAT_CHANGED format : " + decoder.outputFormat)
@@ -123,7 +126,14 @@ class DecodeThread : Thread() {
             isSeeking = false
 
             if (outputBufferInfo.flags and MediaCodec.BUFFER_FLAG_END_OF_STREAM != 0) {
-                isOutputDone = true
+                if (isLoop) {
+                    reset()
+                    outputBufferInfo = MediaCodec.BufferInfo()
+                    isInputDone = false
+                    isPause = true
+                } else {
+                    isOutputDone = true
+                }
             }
         }
     }
@@ -135,6 +145,12 @@ class DecodeThread : Thread() {
 
     fun pause() {
         isPause = !isPause
+    }
+
+    private fun reset() {
+        extractor.seekTo(0, MediaExtractor.SEEK_TO_CLOSEST_SYNC)
+        decoder.flush()
+        decodeController.reset()
     }
 
     fun release() {
