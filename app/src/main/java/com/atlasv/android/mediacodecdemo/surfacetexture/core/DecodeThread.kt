@@ -25,6 +25,9 @@ class DecodeThread : Thread() {
     private var isStop = false
     private var isPause = false
 
+    private var durationUs = 0L
+
+
     /// Seek
     private var isSeeking = false
     private var seekTimeUs = 0L
@@ -38,6 +41,7 @@ class DecodeThread : Thread() {
             (0..extractor.trackCount).forEach { index ->
                 val format = extractor.getTrackFormat(index)
                 val mime = format.getString(MediaFormat.KEY_MIME)
+                durationUs = format.getLong(MediaFormat.KEY_DURATION)
                 if (mime?.startsWith(VIDEO) == true) {
                     extractor.selectTrack(index)
                     decoder = MediaCodec.createDecoderByType(mime)
@@ -120,8 +124,7 @@ class DecodeThread : Thread() {
 
     fun seekTo(i: Int) {
         isSeeking = true
-        seekTimeUs = 19319319L * i / 100
-        println("-------------->seekTimeUs: $seekTimeUs")
+        seekTimeUs = durationUs * i / 100
     }
 
     fun pause() {
