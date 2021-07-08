@@ -14,7 +14,7 @@ class DecodeThread : Thread() {
         private const val VIDEO = "video/"
         private const val TAG = "VideoDecoder"
         private const val PATH =
-            "/storage/emulated/0/DCIM/Camera/ff00c75b7b424a7291ebb54780703a89.mp4"
+            "/storage/emulated/0/DCIM/Camera/6359e1268b5d2949f25ac7dc0c783565.mp4"
     }
 
     private lateinit var extractor: MediaExtractor
@@ -37,19 +37,11 @@ class DecodeThread : Thread() {
 
             (0..extractor.trackCount).forEach { index ->
                 val format = extractor.getTrackFormat(index)
-
                 val mime = format.getString(MediaFormat.KEY_MIME)
                 if (mime?.startsWith(VIDEO) == true) {
                     extractor.selectTrack(index)
                     decoder = MediaCodec.createDecoderByType(mime)
-                    try {
-                        Log.d(TAG, "format : $format")
-                        decoder.configure(format, surface, null, 0 /* Decode */)
-                    } catch (e: IllegalStateException) {
-                        Log.e(TAG, "codec $mime failed configuration. $e")
-                        return false
-                    }
-
+                    decoder.configure(format, surface, null, 0)
                     decoder.start()
                     return true
                 }
