@@ -10,18 +10,13 @@ class DecodeController {
 
     private var prevPresentUs = 0L
     private var prevMonoUs = 0L
-    private val fixedFrameDurationUs = 0L
-    private var isReset = false
+    private var fixedFrameDurationUs = 0L
 
     fun preRender(presentationTimeUs: Long) {
         if (prevMonoUs == 0L) {
             prevMonoUs = System.nanoTime() / 1000
             prevPresentUs = presentationTimeUs
         } else {
-            if (isReset) {
-                prevPresentUs = presentationTimeUs - ONE_MILLION / 30
-                isReset = false
-            }
             var frameDelta = if (fixedFrameDurationUs != 0L) {
                 fixedFrameDurationUs
             } else {
@@ -56,6 +51,8 @@ class DecodeController {
     }
 
     fun reset() {
-        isReset = true
+        prevPresentUs = 0L
+        prevMonoUs = 0L
+        fixedFrameDurationUs = 0L
     }
 }
