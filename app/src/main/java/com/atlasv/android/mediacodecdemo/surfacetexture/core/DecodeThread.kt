@@ -103,9 +103,18 @@ class DecodeThread : Thread() {
                 }
                 else -> {
                     val isRender = outIndex != 0
-                    if (isRender) {
-                        decodeController.preRender(outputBufferInfo.presentationTimeUs)
+                    if (isSeeking) {
+                        // seek时按顺序解码, 但是跳帧显示, 100ms显示一帧
+                        if (outputBufferInfo.presentationTimeUs < seekTimeUs) {
+                            decoder.releaseOutputBuffer(outIndex, false)
+                            continue
+                        }
+                    } else {
+                        if (isRender) {
+                            decodeController.preRender(outputBufferInfo.presentationTimeUs)
+                        }
                     }
+
                     decoder.releaseOutputBuffer(outIndex, isRender)
                 }
             }
