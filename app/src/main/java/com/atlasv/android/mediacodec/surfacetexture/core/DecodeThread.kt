@@ -17,7 +17,7 @@ class DecodeThread : Thread() {
 
     private lateinit var extractor: MediaExtractor
     private lateinit var decoder: MediaCodec
-    private val decodeController by lazy { DecodeController() }
+    private val decodeController by lazy { SpeedController() }
 
     private var isStop = false
     private var isPause = false

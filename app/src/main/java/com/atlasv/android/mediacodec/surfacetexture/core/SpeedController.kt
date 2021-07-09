@@ -3,7 +3,7 @@ package com.atlasv.android.mediacodec.surfacetexture.core
 /**
  * Created by woyanan on 2021/7/8
  */
-class DecodeController {
+class SpeedController {
     companion object {
         private const val ONE_MILLION = 1000000L
     }
