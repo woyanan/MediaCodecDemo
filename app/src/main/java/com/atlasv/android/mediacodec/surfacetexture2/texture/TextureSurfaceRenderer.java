@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture2.texture;
+package com.atlasv.android.mediacodec.surfacetexture2.texture;
 
 import android.graphics.SurfaceTexture;
 import android.opengl.EGL14;

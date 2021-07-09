@@ -1,26 +1,40 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture2.texture;
-
+package com.atlasv.android.mediacodec.surfacetexture2;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
 import android.opengl.GLES11Ext;
 import android.opengl.GLES20;
+import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.Surface;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.atlasv.android.mediacodecdemo.R;
-import com.atlasv.android.mediacodecdemo.surfacetexture2.utils.RawResourceReader;
-import com.atlasv.android.mediacodecdemo.surfacetexture2.utils.ShaderHelper;
+import com.atlasv.android.mediacodec.surfacetexture2.utils.RawResourceReader;
+import com.atlasv.android.mediacodec.surfacetexture2.utils.ShaderHelper;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
-public class VideoTextureSurfaceRenderer extends TextureSurfaceRenderer implements
-        SurfaceTexture.OnFrameAvailableListener {
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
-    public static final String TAG = VideoTextureSurfaceRenderer.class.getSimpleName();
+public class GLViewMediaActivity extends AppCompatActivity implements GLSurfaceView.Renderer, SurfaceTexture.OnFrameAvailableListener {
+
+    public static final String videoPath = "/storage/emulated/0/DCIM/Camera/ff00c75b7b424a7291ebb54780703a89.mp4";
+
+    private boolean frameAvailable = false;
+    int textureParamHandle;
+    int textureCoordinateHandle;
+    int positionHandle;
+    int textureTranformHandle;
 
     /**
      *
@@ -45,24 +59,105 @@ public class VideoTextureSurfaceRenderer extends TextureSurfaceRenderer implemen
             1.0f, 1.0f, 0.0f, 1.0f};
     private int[] textures = new int[1];
 
+    private int width, height;
+
     private int shaderProgram;
     private FloatBuffer vertexBuffer;
     private ShortBuffer drawListBuffer;
-
+    private float[] videoTextureTransform = new float[16];
     private SurfaceTexture videoTexture;
-    private float[] videoTextureTransform;
-    private boolean frameAvailable = false;
-
-    int textureParamHandle;
-    int textureCoordinateHandle;
-    int positionHandle;
-    int textureTranformHandle;
+    private GLSurfaceView glView;
+    private MediaPlayer mediaPlayer;
 
 
-    public VideoTextureSurfaceRenderer(Context context, SurfaceTexture texture, int width, int height) {
-        super(texture, width, height);
-        this.context = context;
-        videoTextureTransform = new float[16];
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+        context = this;
+        glView = new GLSurfaceView(this);
+        setContentView(glView);
+        glView.setEGLContextClientVersion(2);
+        glView.setRenderer(this);
+    }
+
+    private void playVideo() {
+        if (mediaPlayer == null) {
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mp.start();
+                }
+            });
+            Surface surface = new Surface(videoTexture);
+            mediaPlayer.setSurface(surface);
+            surface.release();
+            try {
+                mediaPlayer.setDataSource(videoPath);
+                mediaPlayer.prepareAsync();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            mediaPlayer.start();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
+    @Override
+    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        setupGraphics();
+        setupVertexBuffer();
+        setupTexture();
+    }
+
+    @Override
+    public void onSurfaceChanged(GL10 gl, int width, int height) {
+        this.width = width;
+        this.height = height;
+        playVideo();
+    }
+
+    @Override
+    public void onDrawFrame(GL10 gl) {
+        synchronized (this) {
+            if (frameAvailable) {
+                videoTexture.updateTexImage();
+                videoTexture.getTransformMatrix(videoTextureTransform);
+                frameAvailable = false;
+            }
+        }
+        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+
+        GLES20.glViewport(0, 0, width, height);
+        this.drawTexture();
+
+    }
+
+    @Override
+    public void onFrameAvailable(SurfaceTexture surfaceTexture) {
+        synchronized (this) {
+            frameAvailable = true;
+        }
     }
 
     private void setupGraphics() {
@@ -118,27 +213,6 @@ public class VideoTextureSurfaceRenderer extends TextureSurfaceRenderer implemen
         videoTexture.setOnFrameAvailableListener(this);
     }
 
-    @Override
-    protected boolean draw() {
-        synchronized (this) {
-            if (frameAvailable) {
-                videoTexture.updateTexImage();
-                videoTexture.getTransformMatrix(videoTextureTransform);
-                frameAvailable = false;
-            } else {
-                return false;
-            }
-
-        }
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
-
-        GLES20.glViewport(0, 0, width, height);
-        this.drawTexture();
-
-        return true;
-    }
-
     private void drawTexture() {
         // Draw texture
 
@@ -159,23 +233,6 @@ public class VideoTextureSurfaceRenderer extends TextureSurfaceRenderer implemen
         GLES20.glDisableVertexAttribArray(textureCoordinateHandle);
     }
 
-
-    @Override
-    protected void initGLComponents() {
-        setupVertexBuffer();
-        setupTexture();
-        setupGraphics();
-    }
-
-    @Override
-    protected void deinitGLComponents() {
-        GLES20.glDeleteTextures(1, textures, 0);
-        GLES20.glDeleteProgram(shaderProgram);
-        videoTexture.release();
-        videoTexture.setOnFrameAvailableListener(null);
-    }
-
-
     public void checkGlError(String op) {
         int error;
         while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
@@ -183,15 +240,4 @@ public class VideoTextureSurfaceRenderer extends TextureSurfaceRenderer implemen
         }
     }
 
-    @Override
-    public SurfaceTexture getVideoTexture() {
-        return videoTexture;
-    }
-
-    @Override
-    public void onFrameAvailable(SurfaceTexture surfaceTexture) {
-        synchronized (this) {
-            frameAvailable = true;
-        }
-    }
 }

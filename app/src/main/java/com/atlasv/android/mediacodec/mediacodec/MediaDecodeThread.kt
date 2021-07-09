@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.mediacodec
+package com.atlasv.android.mediacodec.mediacodec
 
 /**
  * Created by woyanan on 2021/7/1

@@ -1,33 +1,25 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture
+package com.atlasv.android.mediacodec.surfacetexture
 
 import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
 import android.view.Surface
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.atlasv.android.mediacodecdemo.R
-import com.atlasv.android.mediacodecdemo.mediacodec.MediaCodecDecoder
-import com.atlasv.android.mediacodecdemo.mediacodec.MediaDecodeThread
-import com.atlasv.android.mediacodecdemo.mediacodec.MediaRenderThread
+import com.atlasv.android.mediacodec.surfacetexture.core.DecodeThread
 import kotlinx.android.synthetic.main.activity_video2.*
 
 /**
  * Created by woyanan on 2021/7/8
  */
-class VideoActivity3 : AppCompatActivity() {
+class VideoActivity4 : AppCompatActivity() {
     companion object {
-        fun start(context: Context) = Intent(context, VideoActivity3::class.java)
+        fun start(context: Context) = Intent(context, VideoActivity4::class.java)
     }
 
-    private var mediaCodecDecode: MediaCodecDecoder? = null
-    private val mediaDecodeThread by lazy {
-        MediaDecodeThread(mediaCodecDecode)
-    }
-    private val mediaRenderThread by lazy {
-        MediaRenderThread(mediaCodecDecode)
+    private val decodeThread by lazy {
+        DecodeThread()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,13 +27,11 @@ class VideoActivity3 : AppCompatActivity() {
         setContentView(R.layout.activity_video2)
         setupMediaCodec()
         pause?.setOnClickListener {
-            mediaDecodeThread.pause()
-            mediaRenderThread.pause()
+            decodeThread.pause()
         }
         seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                mediaDecodeThread.seekTo(p1)
-                mediaRenderThread.seekTo(p1)
+                decodeThread.seekTo(p1)
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {
@@ -50,20 +40,19 @@ class VideoActivity3 : AppCompatActivity() {
             override fun onStopTrackingTouch(p0: SeekBar?) {
             }
         })
+        decodeThread.onNotifyChange = {
+            seekbar?.progress = it
+        }
     }
 
     /**
      * MediaCodec
      */
     private fun setupMediaCodec() {
-        mediaCodecDecode = MediaCodecDecoder()
         surfaceView?.render?.onSurfaceChanged = {
             val surface = Surface(surfaceView?.render?.videoTexture)
-            if (mediaCodecDecode?.init(surface) == true) {
-                mediaDecodeThread.start()
-                mediaRenderThread.start()
-            } else {
-                mediaCodecDecode = null
+            if (decodeThread.init(surface)) {
+                decodeThread.start()
             }
             surface.release()
         }
@@ -71,8 +60,7 @@ class VideoActivity3 : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        mediaDecodeThread.pause()
-        mediaRenderThread.pause()
+        decodeThread.pause()
     }
 
 }

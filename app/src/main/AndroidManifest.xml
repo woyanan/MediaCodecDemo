@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MediaCodecDemo">
         <activity
-            android:name=".MainActivity"
+            android:name="com.atlasv.android.mediacodec.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.MediaCodecDemo.NoActionBar">
             <intent-filter>
@@ -24,14 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mediacodec.VideoActivity" />
-        <activity android:name=".surfacetexture.VideoActivity2" />
-        <activity android:name=".surfacetexture.VideoActivity3" />
-        <activity android:name=".surfacetexture.VideoActivity4" />
-        <activity android:name=".surfacetexture2.NavigatorActivity" />
-        <activity android:name=".surfacetexture2.NativeMediaActivity" />
-        <activity android:name=".surfacetexture2.GLViewMediaActivity" />
-        <activity android:name=".surfacetexture2.texture.TextureViewMediaActivity" />
+        <activity android:name="com.atlasv.android.mediacodec.mediacodec.VideoActivity" />
+        <activity android:name="com.atlasv.android.mediacodec.surfacetexture.VideoActivity2" />
+        <activity android:name="com.atlasv.android.mediacodec.surfacetexture.VideoActivity3" />
+        <activity android:name="com.atlasv.android.mediacodec.surfacetexture.VideoActivity4" />
+        <activity android:name="com.atlasv.android.mediacodec.surfacetexture2.NavigatorActivity" />
+        <activity android:name="com.atlasv.android.mediacodec.surfacetexture2.NativeMediaActivity" />
+        <activity android:name="com.atlasv.android.mediacodec.surfacetexture2.GLViewMediaActivity" />
+        <activity android:name="com.atlasv.android.mediacodec.surfacetexture2.texture.TextureViewMediaActivity" />
     </application>
 
 </manifest>

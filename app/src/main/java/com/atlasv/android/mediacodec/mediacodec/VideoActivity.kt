@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.mediacodec
+package com.atlasv.android.mediacodec.mediacodec
 
 import android.content.Context
 import android.content.Intent

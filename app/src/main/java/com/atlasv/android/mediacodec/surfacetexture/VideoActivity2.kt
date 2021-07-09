@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture
+package com.atlasv.android.mediacodec.surfacetexture
 
 import android.content.Context
 import android.content.Intent
@@ -9,7 +9,7 @@ import android.view.Surface
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.atlasv.android.mediacodecdemo.R
-import com.atlasv.android.mediacodecdemo.surfacetexture2.GLViewMediaActivity
+import com.atlasv.android.mediacodec.surfacetexture2.GLViewMediaActivity
 import kotlinx.android.synthetic.main.activity_video2.*
 
 /**

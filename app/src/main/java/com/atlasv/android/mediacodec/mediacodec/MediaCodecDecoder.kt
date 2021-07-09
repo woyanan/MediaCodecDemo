@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.mediacodec
+package com.atlasv.android.mediacodec.mediacodec
 
 import android.media.MediaCodec
 import android.media.MediaExtractor

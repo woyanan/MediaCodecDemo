@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture2;
+package com.atlasv.android.mediacodec.surfacetexture2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.atlasv.android.mediacodecdemo.R;
-import com.atlasv.android.mediacodecdemo.surfacetexture2.texture.TextureViewMediaActivity;
+import com.atlasv.android.mediacodec.surfacetexture2.texture.TextureViewMediaActivity;
 
 /**
  * PlayVideo-OpenGL

@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture.core
+package com.atlasv.android.mediacodec.surfacetexture.core
 
 import android.media.MediaCodec
 import android.media.MediaExtractor

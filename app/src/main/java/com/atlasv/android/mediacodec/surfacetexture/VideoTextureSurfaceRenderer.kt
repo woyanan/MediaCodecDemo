@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture
+package com.atlasv.android.mediacodec.surfacetexture
 
 /**
  * Created by woyanan on 2021/7/8

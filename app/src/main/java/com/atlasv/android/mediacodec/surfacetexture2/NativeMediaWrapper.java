@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture2;
+package com.atlasv.android.mediacodec.surfacetexture2;
 
 import android.graphics.SurfaceTexture;
 

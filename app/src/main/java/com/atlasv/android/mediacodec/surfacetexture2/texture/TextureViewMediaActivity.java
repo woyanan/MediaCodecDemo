@@ -1,10 +1,9 @@
-package com.atlasv.android.mediacodecdemo.surfacetexture2.texture;
+package com.atlasv.android.mediacodec.surfacetexture2.texture;
 
 import android.app.Activity;
 import android.graphics.SurfaceTexture;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
