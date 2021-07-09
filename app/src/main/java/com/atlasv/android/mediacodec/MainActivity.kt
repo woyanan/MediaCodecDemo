@@ -1,15 +1,20 @@
 package com.atlasv.android.mediacodec
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.atlasv.android.mediacodec.surfacetexture.MediaPlayerActivity
+import com.atlasv.android.mediacodec.databinding.ActivityMainBinding
 import com.atlasv.android.mediacodec.surfacetexture.MediaCodecActivity
-import com.atlasv.android.mediacodecdemo.databinding.ActivityMainBinding
+import com.atlasv.android.mediacodec.surfacetexture.MediaPlayerActivity
+import com.atlasv.android.mediacodec.surfacetexture.utils.CommonUtil
+
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -29,23 +34,53 @@ class MainActivity : AppCompatActivity() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
         }
+    private val pickVideoLauncher = registerForActivityResult(StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val uri = result.data?.data
+            val path = CommonUtil.contentUri2FilePath(this, uri)
+            if (!path.isNullOrEmpty()) {
+                when (value) {
+                    Enum.MEDIA_PLAYER -> {
+                        MediaPlayerActivity.start(this, path)
+                    }
+                    Enum.MEDIACODEC -> {
+                        MediaCodecActivity.start(this, path)
+                    }
+                }
+            }
+        }
+    }
+    private var value = Enum.MEDIA_PLAYER
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.buttonVideoExample.setOnClickListener { view ->
-            startActivity(MediaPlayerActivity.start(view.context))
+        binding.mediaPlayer.setOnClickListener {
+            value = Enum.MEDIA_PLAYER
+            pickVideo()
         }
-        binding.buttonVideoExample2.setOnClickListener { view ->
-            startActivity(MediaCodecActivity.start(view.context))
-//            startActivity(Intent(view.context, NavigatorActivity::class.java))
+        binding.mediacodec.setOnClickListener {
+            value = Enum.MEDIACODEC
+            pickVideo()
         }
+        requestPermission()
+    }
 
+    private fun requestPermission() {
         if (!hasPermissions(this, REQUIRED_PERMISSIONS)) {
             requestPermissionLauncher.launch(REQUIRED_PERMISSIONS)
         }
+    }
+
+    private fun pickVideo() {
+        val intent = Intent()
+        intent.type = "video/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        pickVideoLauncher.launch(intent)
+    }
+
+    enum class Enum {
+        MEDIA_PLAYER, MEDIACODEC
     }
 }

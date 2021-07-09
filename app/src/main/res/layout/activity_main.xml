@@ -6,26 +6,15 @@
     android:orientation="vertical"
     tools:context="com.atlasv.android.mediacodec.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
-    </com.google.android.material.appbar.AppBarLayout>
-
     <Button
-        android:id="@+id/button_video_example"
+        android:id="@+id/media_player"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/media_player" />
 
     <Button
-        android:id="@+id/button_video_example2"
+        android:id="@+id/mediacodec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"

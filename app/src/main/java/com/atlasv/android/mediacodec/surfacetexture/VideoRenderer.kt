@@ -7,7 +7,7 @@ import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import android.opengl.GLUtils
 import android.util.Log
-import com.atlasv.android.mediacodecdemo.R
+import com.atlasv.android.mediacodec.R
 import com.atlasv.android.mediacodec.surfacetexture.utils.RawResourceReader
 import com.atlasv.android.mediacodec.surfacetexture.utils.ShaderHelper
 import java.nio.ByteBuffer
@@ -20,7 +20,7 @@ import javax.microedition.khronos.opengles.GL10
 /**
  * Created by woyanan on 2021/7/7
  */
-class VideoRenderer(val context: Context) : GLSurfaceView.Renderer,
+class VideoRenderer(private val context: Context) : GLSurfaceView.Renderer,
     SurfaceTexture.OnFrameAvailableListener {
     private var shaderProgram = 0
     private var textureParamHandle = 0
@@ -60,21 +60,18 @@ class VideoRenderer(val context: Context) : GLSurfaceView.Renderer,
     var onSurfaceChanged: (() -> Unit)? = null
 
     override fun onSurfaceCreated(p0: GL10?, p1: EGLConfig?) {
-        println("----------------->onSurfaceCreated")
         setupGraphics()
         setupVertexBuffer()
         setupTexture()
     }
 
     override fun onSurfaceChanged(p0: GL10?, width: Int, height: Int) {
-        println("----------------->onSurfaceChanged")
         this.width = width
         this.height = height
         onSurfaceChanged?.invoke()
     }
 
     override fun onDrawFrame(p0: GL10?) {
-        println("----------------->onDrawFrame")
         synchronized(this) {
             if (frameAvailable) {
                 videoTexture?.updateTexImage()
@@ -183,7 +180,6 @@ class VideoRenderer(val context: Context) : GLSurfaceView.Renderer,
     }
 
     override fun onFrameAvailable(p0: SurfaceTexture?) {
-        println("----------------->onFrameAvailable")
         synchronized(this) {
             frameAvailable = true
         }

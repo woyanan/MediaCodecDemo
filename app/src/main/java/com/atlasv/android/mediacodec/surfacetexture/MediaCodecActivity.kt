@@ -6,25 +6,28 @@ import android.os.Bundle
 import android.view.Surface
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.atlasv.android.mediacodecdemo.R
+import com.atlasv.android.mediacodec.R
 import com.atlasv.android.mediacodec.surfacetexture.core.DecodeThread
-import kotlinx.android.synthetic.main.activity_video2.*
+import com.atlasv.android.mediacodec.surfacetexture.utils.CommonUtil
+import kotlinx.android.synthetic.main.activity_video.*
 
 /**
  * Created by woyanan on 2021/7/8
  */
 class MediaCodecActivity : AppCompatActivity() {
     companion object {
-        fun start(context: Context) = Intent(context, MediaCodecActivity::class.java)
+        fun start(context: Context, path: String) {
+            val intent = Intent(context, MediaCodecActivity::class.java)
+            intent.putExtra(CommonUtil.PATH, path)
+            context.startActivity(intent)
+        }
     }
 
-    private val decodeThread by lazy {
-        DecodeThread()
-    }
+    private val decodeThread by lazy { DecodeThread() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video2)
+        setContentView(R.layout.activity_video)
         setupMediaCodec()
         pause?.setOnClickListener {
             decodeThread.pause()
@@ -45,16 +48,16 @@ class MediaCodecActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * MediaCodec
-     */
     private fun setupMediaCodec() {
         surfaceView?.render?.onSurfaceChanged = {
             val surface = Surface(surfaceView?.render?.videoTexture)
-            if (decodeThread.init(surface)) {
-                decodeThread.start()
+            val path = intent?.getStringExtra(CommonUtil.PATH)
+            if (!path.isNullOrEmpty()) {
+                if (decodeThread.init(surface, path)) {
+                    decodeThread.start()
+                }
+                surface.release()
             }
-            surface.release()
         }
     }
 

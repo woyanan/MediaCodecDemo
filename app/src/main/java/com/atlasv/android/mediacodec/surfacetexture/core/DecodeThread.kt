@@ -13,8 +13,6 @@ class DecodeThread : Thread() {
     companion object {
         private const val VIDEO = "video/"
         private const val TAG = "VideoDecoder"
-        private const val PATH =
-            "/storage/emulated/0/DCIM/Camera/6359e1268b5d2949f25ac7dc0c783565.mp4"
     }
 
     private lateinit var extractor: MediaExtractor
@@ -32,11 +30,11 @@ class DecodeThread : Thread() {
 
     var onNotifyChange: ((Int) -> Unit)? = null
 
-    fun init(surface: Surface): Boolean {
+    fun init(surface: Surface, path: String): Boolean {
         isStop = false
         kotlin.runCatching {
             extractor = MediaExtractor()
-            extractor.setDataSource(PATH)
+            extractor.setDataSource(path)
 
             (0..extractor.trackCount).forEach { index ->
                 val format = extractor.getTrackFormat(index)

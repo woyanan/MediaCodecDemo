@@ -8,24 +8,27 @@ import android.os.Bundle
 import android.view.Surface
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
-import com.atlasv.android.mediacodecdemo.R
-import kotlinx.android.synthetic.main.activity_video2.*
+import com.atlasv.android.mediacodec.R
+import com.atlasv.android.mediacodec.surfacetexture.utils.CommonUtil
+import kotlinx.android.synthetic.main.activity_video.*
 
 /**
  * Created by woyanan on 2021/7/6
  */
 class MediaPlayerActivity : AppCompatActivity() {
     companion object {
-        const val videoPath = "/storage/emulated/0/DCIM/Camera/ff00c75b7b424a7291ebb54780703a89.mp4"
-
-        fun start(context: Context) = Intent(context, MediaPlayerActivity::class.java)
+        fun start(context: Context, path: String) {
+            val intent = Intent(context, MediaPlayerActivity::class.java)
+            intent.putExtra(CommonUtil.PATH, path)
+            context.startActivity(intent)
+        }
     }
 
     private val mediaPlayer by lazy { MediaPlayer() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_video2)
+        setContentView(R.layout.activity_video)
         setupMediaPlayer()
 
         pause?.setOnClickListener {
@@ -49,9 +52,6 @@ class MediaPlayerActivity : AppCompatActivity() {
         })
     }
 
-    /**
-     * MediaPlayer
-     */
     private fun setupMediaPlayer() {
         surfaceView?.render?.onSurfaceChanged = {
             mediaPlayer.setOnPreparedListener { mediaPlayer -> mediaPlayer.start() }
@@ -59,7 +59,8 @@ class MediaPlayerActivity : AppCompatActivity() {
             mediaPlayer.setSurface(surface)
             surface.release()
             kotlin.runCatching {
-                mediaPlayer.setDataSource(videoPath)
+                val path = intent?.getStringExtra(CommonUtil.PATH)
+                mediaPlayer.setDataSource(path)
                 mediaPlayer.prepareAsync()
             }
         }
