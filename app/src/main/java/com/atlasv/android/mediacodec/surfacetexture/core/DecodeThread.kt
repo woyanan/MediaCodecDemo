@@ -27,8 +27,6 @@ class DecodeThread : Thread() {
 
     private var durationUs = 0L
 
-
-    /// Seek
     private var isSeeking = false
     private var seekTimeUs = 0L
 

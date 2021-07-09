@@ -22,28 +22,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/video_example" />
+        android:text="@string/media_player" />
 
     <Button
         android:id="@+id/button_video_example2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/video_example2" />
-
-    <Button
-        android:id="@+id/button_video_example3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/video_example3" />
-
-    <Button
-        android:id="@+id/button_video_example4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/video_example4" />
-
+        android:text="@string/mediacodec" />
 
 </LinearLayout>
