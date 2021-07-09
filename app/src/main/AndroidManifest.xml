@@ -26,10 +26,6 @@
         </activity>
         <activity android:name="com.atlasv.android.mediacodec.surfacetexture.VideoActivity2" />
         <activity android:name="com.atlasv.android.mediacodec.surfacetexture.VideoActivity4" />
-        <activity android:name="com.atlasv.android.mediacodec.surfacetexture2.NavigatorActivity" />
-        <activity android:name="com.atlasv.android.mediacodec.surfacetexture2.NativeMediaActivity" />
-        <activity android:name="com.atlasv.android.mediacodec.surfacetexture2.GLViewMediaActivity" />
-        <activity android:name="com.atlasv.android.mediacodec.surfacetexture2.texture.TextureViewMediaActivity" />
     </application>
 
 </manifest>

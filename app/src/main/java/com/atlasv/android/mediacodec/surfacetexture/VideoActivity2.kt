@@ -9,7 +9,6 @@ import android.view.Surface
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.atlasv.android.mediacodecdemo.R
-import com.atlasv.android.mediacodec.surfacetexture2.GLViewMediaActivity
 import kotlinx.android.synthetic.main.activity_video2.*
 
 /**
@@ -17,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_video2.*
  */
 class VideoActivity2 : AppCompatActivity() {
     companion object {
+        const val videoPath = "/storage/emulated/0/DCIM/Camera/ff00c75b7b424a7291ebb54780703a89.mp4"
+
         fun start(context: Context) = Intent(context, VideoActivity2::class.java)
     }
 
@@ -58,7 +59,7 @@ class VideoActivity2 : AppCompatActivity() {
             mediaPlayer.setSurface(surface)
             surface.release()
             kotlin.runCatching {
-                mediaPlayer.setDataSource(GLViewMediaActivity.videoPath)
+                mediaPlayer.setDataSource(videoPath)
                 mediaPlayer.prepareAsync()
             }
         }

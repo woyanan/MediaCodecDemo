@@ -8,8 +8,8 @@ import android.opengl.GLSurfaceView
 import android.opengl.GLUtils
 import android.util.Log
 import com.atlasv.android.mediacodecdemo.R
-import com.atlasv.android.mediacodec.surfacetexture2.utils.RawResourceReader
-import com.atlasv.android.mediacodec.surfacetexture2.utils.ShaderHelper
+import com.atlasv.android.mediacodec.surfacetexture.utils.RawResourceReader
+import com.atlasv.android.mediacodec.surfacetexture.utils.ShaderHelper
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
