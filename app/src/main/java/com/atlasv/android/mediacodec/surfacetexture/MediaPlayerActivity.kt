@@ -14,11 +14,11 @@ import kotlinx.android.synthetic.main.activity_video2.*
 /**
  * Created by woyanan on 2021/7/6
  */
-class VideoActivity2 : AppCompatActivity() {
+class MediaPlayerActivity : AppCompatActivity() {
     companion object {
         const val videoPath = "/storage/emulated/0/DCIM/Camera/ff00c75b7b424a7291ebb54780703a89.mp4"
 
-        fun start(context: Context) = Intent(context, VideoActivity2::class.java)
+        fun start(context: Context) = Intent(context, MediaPlayerActivity::class.java)
     }
 
     private val mediaPlayer by lazy { MediaPlayer() }

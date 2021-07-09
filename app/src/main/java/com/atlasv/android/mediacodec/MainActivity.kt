@@ -7,8 +7,8 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.atlasv.android.mediacodec.surfacetexture.VideoActivity2
-import com.atlasv.android.mediacodec.surfacetexture.VideoActivity4
+import com.atlasv.android.mediacodec.surfacetexture.MediaPlayerActivity
+import com.atlasv.android.mediacodec.surfacetexture.MediaCodecActivity
 import com.atlasv.android.mediacodecdemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -37,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonVideoExample.setOnClickListener { view ->
-            startActivity(VideoActivity2.start(view.context))
+            startActivity(MediaPlayerActivity.start(view.context))
         }
         binding.buttonVideoExample2.setOnClickListener { view ->
-            startActivity(VideoActivity4.start(view.context))
+            startActivity(MediaCodecActivity.start(view.context))
 //            startActivity(Intent(view.context, NavigatorActivity::class.java))
         }
 

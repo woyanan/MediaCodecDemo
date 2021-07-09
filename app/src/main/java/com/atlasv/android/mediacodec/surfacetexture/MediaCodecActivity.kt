@@ -13,9 +13,9 @@ import kotlinx.android.synthetic.main.activity_video2.*
 /**
  * Created by woyanan on 2021/7/8
  */
-class VideoActivity4 : AppCompatActivity() {
+class MediaCodecActivity : AppCompatActivity() {
     companion object {
-        fun start(context: Context) = Intent(context, VideoActivity4::class.java)
+        fun start(context: Context) = Intent(context, MediaCodecActivity::class.java)
     }
 
     private val decodeThread by lazy {
