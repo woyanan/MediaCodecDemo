@@ -143,6 +143,10 @@ class DecodeThread : Thread() {
         isPause = !isPause
     }
 
+    fun isPlaying(): Boolean {
+        return !isPause
+    }
+
     private fun reset() {
         extractor.seekTo(0, MediaExtractor.SEEK_TO_CLOSEST_SYNC)
         decoder.flush()

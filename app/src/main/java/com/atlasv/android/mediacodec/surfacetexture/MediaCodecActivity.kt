@@ -29,8 +29,9 @@ class MediaCodecActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video)
         setupMediaCodec()
-        pause?.setOnClickListener {
+        play?.setOnClickListener {
             decodeThread.pause()
+            play?.setText(if (decodeThread.isPlaying()) R.string.pause else R.string.play)
         }
         seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {

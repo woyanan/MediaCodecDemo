@@ -31,12 +31,17 @@ class MediaPlayerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_video)
         setupMediaPlayer()
 
-        pause?.setOnClickListener {
-            mediaPlayer.pause()
+        play?.setOnClickListener {
+            if (mediaPlayer.isPlaying) {
+                mediaPlayer.pause()
+            } else {
+                mediaPlayer.start()
+            }
+            play?.setText(if (mediaPlayer.isPlaying) R.string.pause else R.string.play)
         }
         seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
-                val timeMs = 19319 * p1 / 100
+                val timeMs = mediaPlayer.duration * p1 / 100
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     mediaPlayer.seekTo(timeMs.toLong(), MediaPlayer.SEEK_CLOSEST)
                 } else {
