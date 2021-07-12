@@ -27,6 +27,7 @@ class DecodeThread : Thread() {
 
     private var isSeeking = false
     private var seekTimeUs = 0L
+    private var isBackForward = false
 
     var onNotifyChange: ((Int) -> Unit)? = null
 
@@ -83,8 +84,13 @@ class DecodeThread : Thread() {
                         isInputDone = true
                     } else {
                         decoder.queueInputBuffer(index, 0, sampleSize, extractor.sampleTime, 0)
-                        Log.d(TAG, "InputBuffer advance")
-                        extractor.advance()
+                        if (isSeeking && isBackForward) {
+                            Log.d(TAG, "====>InputBuffer seekTo")
+                            extractor.seekTo(seekTimeUs, MediaExtractor.SEEK_TO_CLOSEST_SYNC)
+                        } else {
+                            Log.d(TAG, "====>InputBuffer advance")
+                            extractor.advance()
+                        }
                     }
                 }
             }
@@ -102,10 +108,11 @@ class DecodeThread : Thread() {
                     val isRender = outIndex != 0
                     val presentationTimeUs = outputBufferInfo.presentationTimeUs
                     if (isSeeking) {
-                        // seek时按顺序解码, 但是跳帧显示, 100ms显示一帧
-                        if (presentationTimeUs < seekTimeUs) {
-                            decoder.releaseOutputBuffer(outIndex, false)
-                            continue
+                        if (!isBackForward) {
+                            if (presentationTimeUs < seekTimeUs) {
+                                decoder.releaseOutputBuffer(outIndex, false)
+                                continue
+                            }
                         }
                     } else {
                         if (isRender) {
@@ -136,7 +143,9 @@ class DecodeThread : Thread() {
 
     fun seekTo(i: Int) {
         isSeeking = true
-        seekTimeUs = durationUs * i / 100
+        val newSeekTimeUs = durationUs * i / 100
+        isBackForward = newSeekTimeUs < seekTimeUs
+        seekTimeUs = newSeekTimeUs
     }
 
     fun pause() {
