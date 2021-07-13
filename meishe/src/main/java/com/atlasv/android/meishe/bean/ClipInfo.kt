@@ -5,4 +5,6 @@ package com.atlasv.android.meishe.bean
  */
 class ClipInfo {
     var filePath: String? = null
+    var trimInUs: Long = 0
+    var trimOutUs: Long = 0
 }

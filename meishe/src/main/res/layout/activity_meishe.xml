@@ -22,6 +22,24 @@
         app:layout_constraintBottom_toTopOf="@+id/llPlayView"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/btnClip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="clip"
+        app:layout_constraintBottom_toTopOf="@+id/llPlayView"
+        app:layout_constraintStart_toEndOf="@+id/btnConcat" />
+
+    <Button
+        android:id="@+id/btnSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="speed"
+        app:layout_constraintBottom_toTopOf="@+id/llPlayView"
+        app:layout_constraintStart_toEndOf="@+id/btnClip" />
+
     <LinearLayout
         android:id="@+id/llPlayView"
         android:layout_width="match_parent"

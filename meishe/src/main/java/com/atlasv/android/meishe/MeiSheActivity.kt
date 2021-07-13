@@ -104,6 +104,18 @@ class MeiSheActivity : AppCompatActivity() {
             value = Enum.CONCAT
             pickVideo()
         }
+        btnClip?.setOnClickListener {
+            // Clip First [5s,10s]
+            val clipInfo = TimelineData.instance.clipInfoList[0]
+            clipInfo.trimInUs = 5000000
+            clipInfo.trimOutUs = 10000000
+            TimelineUtil.reBuildVideoTrack(timeline)
+            refreshLiveWindowFrame()
+        }
+        btnSpeed?.setOnClickListener {
+            // Speed First 2x
+
+        }
     }
 
     private fun initStreamingContext() {

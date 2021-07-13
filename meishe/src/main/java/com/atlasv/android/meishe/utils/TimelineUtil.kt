@@ -63,7 +63,13 @@ object TimelineUtil {
         val clipInfoList = TimelineData.instance.clipInfoList
         for (i in clipInfoList.indices) {
             val clipInfo = clipInfoList[i]
-            videoTrack.appendClip(clipInfo.filePath)
+            val videoClip = videoTrack.appendClip(clipInfo.filePath)
+            if (clipInfo.trimInUs > 0) {
+                videoClip.changeTrimInPoint(clipInfo.trimInUs, true)
+            }
+            if (clipInfo.trimOutUs > 0) {
+                videoClip.changeTrimOutPoint(clipInfo.trimOutUs, true)
+            }
         }
         for (i in 0 until clipInfoList.size - 1) {
             videoTrack.setBuiltinTransition(i, "")
