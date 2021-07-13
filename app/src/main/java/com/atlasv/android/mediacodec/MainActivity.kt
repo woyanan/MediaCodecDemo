@@ -14,6 +14,7 @@ import com.atlasv.android.mediacodec.databinding.ActivityMainBinding
 import com.atlasv.android.mediacodec.surfacetexture.MediaCodecActivity
 import com.atlasv.android.mediacodec.surfacetexture.MediaPlayerActivity
 import com.atlasv.android.mediacodec.surfacetexture.utils.CommonUtil
+import com.atlasv.android.meishe.MeiSheActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +47,9 @@ class MainActivity : AppCompatActivity() {
                     Enum.MEDIACODEC -> {
                         MediaCodecActivity.start(this, path)
                     }
+                    Enum.MEI_SHE -> {
+                        MeiSheActivity.start(this, path)
+                    }
                 }
             }
         }
@@ -62,6 +66,10 @@ class MainActivity : AppCompatActivity() {
         }
         binding.mediacodec.setOnClickListener {
             value = Enum.MEDIACODEC
+            pickVideo()
+        }
+        binding.meishe.setOnClickListener {
+            value = Enum.MEI_SHE
             pickVideo()
         }
         requestPermission()
@@ -81,6 +89,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     enum class Enum {
-        MEDIA_PLAYER, MEDIACODEC
+        MEDIA_PLAYER, MEDIACODEC, MEI_SHE
     }
 }

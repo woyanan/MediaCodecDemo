@@ -8,22 +8,33 @@
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/seekbar"
+        app:layout_constraintBottom_toTopOf="@+id/llPlayView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SeekBar
-        android:id="@+id/seekbar"
+    <LinearLayout
+        android:id="@+id/llPlayView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/play"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#7f000000"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/pause"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/ivPlay"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="25dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/ic_play" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:maxHeight="1dp"
+            android:minHeight="1dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

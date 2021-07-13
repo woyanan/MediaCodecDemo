@@ -20,4 +20,11 @@
         android:layout_marginTop="40dp"
         android:text="@string/mediacodec" />
 
+    <Button
+        android:id="@+id/meishe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/meishe" />
+
 </LinearLayout>

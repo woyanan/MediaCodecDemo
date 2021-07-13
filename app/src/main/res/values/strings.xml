@@ -2,6 +2,5 @@
     <string name="app_name">MediaCodecDemo</string>
     <string name="media_player">MediaPlayer</string>
     <string name="mediacodec">MediaCodec</string>
-    <string name="play">Play</string>
-    <string name="pause">Pause</string>
+    <string name="meishe">MeiShe</string>
 </resources>

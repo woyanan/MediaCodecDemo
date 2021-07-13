@@ -20,7 +20,7 @@ class DecodeThread : Thread() {
     private val decodeController by lazy { SpeedController() }
 
     private var isStop = false
-    private var isPause = false
+    private var isPause = true
     private val isLoop = true
 
     private var durationUs = 0L

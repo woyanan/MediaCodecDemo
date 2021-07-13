@@ -31,15 +31,15 @@ class MediaPlayerActivity : AppCompatActivity() {
         setContentView(R.layout.activity_video)
         setupMediaPlayer()
 
-        play?.setOnClickListener {
+        ivPlay?.setOnClickListener {
             if (mediaPlayer.isPlaying) {
                 mediaPlayer.pause()
             } else {
                 mediaPlayer.start()
             }
-            play?.setText(if (mediaPlayer.isPlaying) R.string.pause else R.string.play)
+            ivPlay?.setImageResource(if (mediaPlayer.isPlaying) R.mipmap.ic_pause else R.mipmap.ic_play)
         }
-        seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 val timeMs = mediaPlayer.duration * p1 / 100
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -59,7 +59,6 @@ class MediaPlayerActivity : AppCompatActivity() {
 
     private fun setupMediaPlayer() {
         surfaceView?.render?.onSurfaceChanged = {
-            mediaPlayer.setOnPreparedListener { mediaPlayer -> mediaPlayer.start() }
             val surface = Surface(surfaceView?.render?.videoTexture)
             mediaPlayer.setSurface(surface)
             surface.release()

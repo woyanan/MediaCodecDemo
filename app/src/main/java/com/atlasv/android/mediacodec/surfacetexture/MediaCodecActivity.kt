@@ -29,11 +29,10 @@ class MediaCodecActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_video)
         setupMediaCodec()
-        play?.setOnClickListener {
-            decodeThread.pause()
-            play?.setText(if (decodeThread.isPlaying()) R.string.pause else R.string.play)
+        ivPlay?.setOnClickListener {
+            ivPlay?.setImageResource(if (decodeThread.isPlaying()) R.mipmap.ic_pause else R.mipmap.ic_play)
         }
-        seekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 if (p2) {
                     decodeThread.seekTo(p1)
@@ -47,7 +46,7 @@ class MediaCodecActivity : AppCompatActivity() {
             }
         })
         decodeThread.onNotifyChange = {
-            seekbar?.progress = it
+            seekBar?.progress = it
         }
     }
 

@@ -1,2 +1,3 @@
 rootProject.name = "MediaCodecDemo"
 include ':app'
+include ':meishe'
