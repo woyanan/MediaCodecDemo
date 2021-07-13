@@ -13,6 +13,15 @@
         app:layout_constraintBottom_toTopOf="@+id/llPlayView"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btnConcat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="concat"
+        app:layout_constraintBottom_toTopOf="@+id/llPlayView"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <LinearLayout
         android:id="@+id/llPlayView"
         android:layout_width="match_parent"

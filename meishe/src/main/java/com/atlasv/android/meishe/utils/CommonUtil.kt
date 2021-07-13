@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodec.surfacetexture.utils
+package com.atlasv.android.meishe.utils
 
 import android.content.Context
 import android.database.Cursor

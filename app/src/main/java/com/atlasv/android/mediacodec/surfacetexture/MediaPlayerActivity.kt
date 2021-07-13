@@ -9,7 +9,7 @@ import android.view.Surface
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.atlasv.android.mediacodec.R
-import com.atlasv.android.mediacodec.surfacetexture.utils.CommonUtil
+import com.atlasv.android.meishe.utils.CommonUtil
 import kotlinx.android.synthetic.main.activity_video.*
 
 /**

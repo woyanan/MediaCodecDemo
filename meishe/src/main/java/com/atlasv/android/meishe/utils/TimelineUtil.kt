@@ -25,6 +25,9 @@ object TimelineUtil {
             val clipInfo = clipInfoList[i]
             videoTrack.appendClip(clipInfo.filePath)
         }
+        for (i in 0 until clipInfoList.size - 1) {
+            videoTrack.setBuiltinTransition(i, "")
+        }
         videoTrack.setVolumeGain(VIDEO_VOLUME_DEFAULT_VALUE, VIDEO_VOLUME_DEFAULT_VALUE)
         return true
     }
@@ -40,6 +43,33 @@ object TimelineUtil {
         audioEditRes.channelCount = 2
 
         return context.createTimeline(videoResolution, videoFps, audioEditRes)
+    }
+
+    fun reBuildVideoTrack(timeline: NvsTimeline?): Boolean {
+        if (timeline == null) {
+            return false
+        }
+        val videoTrackCount = timeline.videoTrackCount()
+        val videoTrack = if (videoTrackCount == 0) {
+            timeline.appendVideoTrack()
+        } else {
+            timeline.getVideoTrackByIndex(0)
+        }
+        if (videoTrack == null) {
+            return false
+        }
+        videoTrack.removeAllClips()
+        timeline.removeCurrentTheme()
+        val clipInfoList = TimelineData.instance.clipInfoList
+        for (i in clipInfoList.indices) {
+            val clipInfo = clipInfoList[i]
+            videoTrack.appendClip(clipInfo.filePath)
+        }
+        for (i in 0 until clipInfoList.size - 1) {
+            videoTrack.setBuiltinTransition(i, "")
+        }
+        videoTrack.setVolumeGain(VIDEO_VOLUME_DEFAULT_VALUE, VIDEO_VOLUME_DEFAULT_VALUE)
+        return true
     }
 
 }

@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import com.atlasv.android.mediacodec.databinding.ActivityMainBinding
 import com.atlasv.android.mediacodec.surfacetexture.MediaCodecActivity
 import com.atlasv.android.mediacodec.surfacetexture.MediaPlayerActivity
-import com.atlasv.android.mediacodec.surfacetexture.utils.CommonUtil
+import com.atlasv.android.meishe.utils.CommonUtil
 import com.atlasv.android.meishe.MeiSheActivity
 
 

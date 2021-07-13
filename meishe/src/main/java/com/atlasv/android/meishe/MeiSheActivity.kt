@@ -1,12 +1,15 @@
 package com.atlasv.android.meishe
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.atlasv.android.meishe.bean.ClipInfo
 import com.atlasv.android.meishe.bean.TimelineData
+import com.atlasv.android.meishe.utils.CommonUtil
 import com.atlasv.android.meishe.utils.TimelineUtil
 import com.meicam.sdk.NvsStreamingContext
 import com.meicam.sdk.NvsTimeline
@@ -29,6 +32,26 @@ class MeiSheActivity : AppCompatActivity() {
      */
     private var timeline: NvsTimeline? = null
     private var streamingContext: NvsStreamingContext? = null
+
+    enum class Enum {
+        CONCAT
+    }
+
+    private var value = Enum.CONCAT
+    private val pickVideoLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uri = result.data?.data
+                val path = CommonUtil.contentUri2FilePath(this, uri)
+                if (!path.isNullOrEmpty()) {
+                    when (value) {
+                        Enum.CONCAT -> {
+                            concat(path)
+                        }
+                    }
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +90,7 @@ class MeiSheActivity : AppCompatActivity() {
                 if (fromUser) {
                     val durationUs = timeline?.duration ?: 0
                     val timeStamp = progress * durationUs / 100
-                    seek(timeStamp, 0)
+                    seekTo(timeStamp, 0)
                 }
             }
 
@@ -77,6 +100,10 @@ class MeiSheActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
             }
         })
+        btnConcat?.setOnClickListener {
+            value = Enum.CONCAT
+            pickVideo()
+        }
     }
 
     private fun initStreamingContext() {
@@ -152,7 +179,7 @@ class MeiSheActivity : AppCompatActivity() {
         )
     }
 
-    private fun seek(timestamp: Long, seekShowMode: Int) {
+    private fun seekTo(timestamp: Long, seekShowMode: Int) {
         streamingContext?.seekTimeline(
             timeline,
             timestamp,
@@ -167,5 +194,27 @@ class MeiSheActivity : AppCompatActivity() {
 
     private fun resume() {
         streamingContext?.resumePlayback()
+    }
+
+    private fun concat(path: String) {
+        val clipInfo = ClipInfo()
+        clipInfo.filePath = path
+        TimelineData.instance.clipInfoList.add(clipInfo)
+        TimelineUtil.reBuildVideoTrack(timeline)
+        refreshLiveWindowFrame()
+    }
+
+    private fun refreshLiveWindowFrame() {
+        if (streamingContext?.streamingEngineState != NvsStreamingContext.STREAMING_ENGINE_STATE_PLAYBACK) {
+            val timestamp = streamingContext?.getTimelineCurrentPosition(timeline) ?: return
+            seekTo(timestamp, 0)
+        }
+    }
+
+    private fun pickVideo() {
+        val intent = Intent()
+        intent.type = "video/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        pickVideoLauncher.launch(intent)
     }
 }
