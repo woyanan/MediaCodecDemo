@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodec.surfacetexture
+package com.atlasv.android.meishe
 
 import android.content.Context
 import android.opengl.GLSurfaceView

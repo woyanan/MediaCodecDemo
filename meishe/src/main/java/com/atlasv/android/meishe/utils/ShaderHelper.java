@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodec.surfacetexture.utils;
+package com.atlasv.android.meishe.utils;
 
 import android.opengl.GLES20;
 import android.util.Log;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.atlasv.android.mediacodec.surfacetexture.VideoGLSurfaceView
+    <com.atlasv.android.meishe.VideoGLSurfaceView
         android:id="@+id/surfaceView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -10,6 +10,14 @@
         android:id="@+id/liveWindow"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/llPlayView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.atlasv.android.meishe.VideoGLSurfaceView
+        android:id="@+id/liveWindow2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/llPlayView"
         app:layout_constraintTop_toTopOf="parent" />
 

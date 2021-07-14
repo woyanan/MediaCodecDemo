@@ -1,4 +1,4 @@
-package com.atlasv.android.mediacodec.surfacetexture
+package com.atlasv.android.meishe
 
 import android.content.Context
 import android.graphics.SurfaceTexture
@@ -7,9 +7,8 @@ import android.opengl.GLES20
 import android.opengl.GLSurfaceView
 import android.opengl.GLUtils
 import android.util.Log
-import com.atlasv.android.mediacodec.R
-import com.atlasv.android.mediacodec.surfacetexture.utils.RawResourceReader
-import com.atlasv.android.mediacodec.surfacetexture.utils.ShaderHelper
+import com.atlasv.android.meishe.utils.RawResourceReader
+import com.atlasv.android.meishe.utils.ShaderHelper
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer
@@ -55,7 +54,7 @@ class VideoRenderer(private val context: Context) : GLSurfaceView.Renderer,
     private var frameAvailable = false
     private val videoTextureTransform = FloatArray(16)
 
-    var videoTexture: SurfaceTexture? = null
+    var surfaceTexture: SurfaceTexture? = null
 
     var onSurfaceChanged: (() -> Unit)? = null
 
@@ -74,8 +73,8 @@ class VideoRenderer(private val context: Context) : GLSurfaceView.Renderer,
     override fun onDrawFrame(p0: GL10?) {
         synchronized(this) {
             if (frameAvailable) {
-                videoTexture?.updateTexImage()
-                videoTexture?.getTransformMatrix(videoTextureTransform)
+                surfaceTexture?.updateTexImage()
+                surfaceTexture?.getTransformMatrix(videoTextureTransform)
                 frameAvailable = false
             }
         }
@@ -138,8 +137,8 @@ class VideoRenderer(private val context: Context) : GLSurfaceView.Renderer,
         GLES20.glBindTexture(GLES11Ext.GL_TEXTURE_EXTERNAL_OES, textures[0])
         checkGlError("Texture bind")
 
-        videoTexture = SurfaceTexture(textures[0])
-        videoTexture?.setOnFrameAvailableListener(this)
+        surfaceTexture = SurfaceTexture(textures[0])
+        surfaceTexture?.setOnFrameAvailableListener(this)
     }
 
     private fun checkGlError(op: String) {

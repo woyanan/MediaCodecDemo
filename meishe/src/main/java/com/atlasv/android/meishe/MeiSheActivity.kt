@@ -180,7 +180,15 @@ class MeiSheActivity : AppCompatActivity() {
             }
 
         })
-        streamingContext?.connectTimelineWithLiveWindowExt(timeline, liveWindow)
+//        streamingContext?.connectTimelineWithLiveWindowExt(timeline, liveWindow)
+        liveWindow2?.render?.onSurfaceChanged = {
+            this.runOnUiThread {
+                streamingContext?.connectTimelineWithSurfaceTexture(
+                    timeline,
+                    liveWindow2.render.surfaceTexture
+                )
+            }
+        }
     }
 
     private fun play(startTime: Long, endTime: Long) {

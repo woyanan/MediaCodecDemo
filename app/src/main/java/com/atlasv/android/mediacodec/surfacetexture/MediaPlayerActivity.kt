@@ -59,7 +59,7 @@ class MediaPlayerActivity : AppCompatActivity() {
 
     private fun setupMediaPlayer() {
         surfaceView?.render?.onSurfaceChanged = {
-            val surface = Surface(surfaceView?.render?.videoTexture)
+            val surface = Surface(surfaceView?.render?.surfaceTexture)
             mediaPlayer.setSurface(surface)
             surface.release()
             kotlin.runCatching {

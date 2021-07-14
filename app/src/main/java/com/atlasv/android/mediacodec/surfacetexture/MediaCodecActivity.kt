@@ -52,7 +52,7 @@ class MediaCodecActivity : AppCompatActivity() {
 
     private fun setupMediaCodec() {
         surfaceView?.render?.onSurfaceChanged = {
-            val surface = Surface(surfaceView?.render?.videoTexture)
+            val surface = Surface(surfaceView?.render?.surfaceTexture)
             val path = intent?.getStringExtra(CommonUtil.PATH)
             if (!path.isNullOrEmpty()) {
                 if (decodeThread.init(surface, path)) {
