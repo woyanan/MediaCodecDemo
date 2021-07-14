@@ -1,5 +1,5 @@
 
-### DEMO 总结
+### DEMO 总结<br>
 #### 1、MediaPlayer编解码、SurfaceTexture渲染<br>
 - 高于8.0版本,MediaPlayer.SEEK_CLOSEST的seek模式比exo的要流畅<br>
     
@@ -12,6 +12,6 @@
 #### 3、MeiShe SDK
 - [x] 片段播放过渡卡顿问题、逐帧预览问题<br>
 - [x] 基本编辑(concat、clip、speed、split、copy、图片预览)<br> 
-- [ ] 转场、特效的结合<br>
-- [ ] 画布编辑操作<br>
+- [x] 转场、特效的结合<br>
+- [x] 画布编辑操作<br>
 - [ ] 收费项目,必剪和splice在用<br>         
