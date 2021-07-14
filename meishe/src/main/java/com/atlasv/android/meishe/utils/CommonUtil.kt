@@ -33,4 +33,16 @@ object CommonUtil {
         return filePath
     }
 
+    fun formatTimeStrWithUs(us: Long): String {
+        val second = (us / 1000000.0).toInt()
+        val hh = second / 3600
+        val mm = second % 3600 / 60
+        val ss = second % 60
+        return if (hh > 0) String.format(
+            "%02d:%02d:%02d",
+            hh,
+            mm,
+            ss
+        ) else String.format("%02d:%02d", mm, ss)
+    }
 }

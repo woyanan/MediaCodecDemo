@@ -59,6 +59,7 @@ class MeiSheActivity : AppCompatActivity() {
         setContentView(R.layout.activity_meishe)
         initTimeline()
         setOnClickListener()
+        updateInfo()
     }
 
     override fun onResume() {
@@ -142,10 +143,15 @@ class MeiSheActivity : AppCompatActivity() {
         timeline = TimelineUtil.createTimeline()
     }
 
+    private fun updateInfo() {
+        timeline?.apply {
+            tvDuration.text = CommonUtil.formatTimeStrWithUs(this.duration)
+        }
+    }
+
     private fun connectTimelineWithLiveWindow() {
         streamingContext?.setPlaybackCallback(object : NvsStreamingContext.PlaybackCallback {
             override fun onPlaybackPreloadingCompletion(nvsTimeline: NvsTimeline?) {
-
             }
 
             override fun onPlaybackStopped(nvsTimeline: NvsTimeline?) {
@@ -232,6 +238,7 @@ class MeiSheActivity : AppCompatActivity() {
             val timestamp = streamingContext?.getTimelineCurrentPosition(timeline) ?: return
             seekTo(timestamp, 0)
         }
+        updateInfo()
     }
 
     private fun pickFile() {
