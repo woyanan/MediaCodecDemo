@@ -7,4 +7,5 @@ class ClipInfo {
     var filePath: String? = null
     var trimInUs: Long = 0
     var trimOutUs: Long = 0
+    var speed: Double = 0.0
 }

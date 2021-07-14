@@ -70,6 +70,9 @@ object TimelineUtil {
             if (clipInfo.trimOutUs > 0) {
                 videoClip.changeTrimOutPoint(clipInfo.trimOutUs, true)
             }
+            if (clipInfo.speed > 0) {
+                videoClip.changeSpeed(clipInfo.speed, false)
+            }
         }
         for (i in 0 until clipInfoList.size - 1) {
             videoTrack.setBuiltinTransition(i, "")

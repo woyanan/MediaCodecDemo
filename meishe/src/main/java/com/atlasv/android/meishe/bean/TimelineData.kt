@@ -1,7 +1,6 @@
 package com.atlasv.android.meishe.bean
 
 import android.graphics.Point
-import com.atlasv.android.meishe.utils.NvAsset
 import com.meicam.sdk.NvsVideoResolution
 import java.util.*
 
@@ -11,6 +10,7 @@ import java.util.*
 class TimelineData {
     companion object {
         const val CompileVideoRes_1080 = 1080
+        const val AspectRatio_9v16 = 4
 
         val instance by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
             TimelineData()
@@ -19,7 +19,7 @@ class TimelineData {
 
     var videoResolution: NvsVideoResolution? = null
     var clipInfoList = ArrayList<ClipInfo>()
-    var makeRatio = NvAsset.AspectRatio_9v16
+    var makeRatio = AspectRatio_9v16
 
     init {
         initVideoResolution()

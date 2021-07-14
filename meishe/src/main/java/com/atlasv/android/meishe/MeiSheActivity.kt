@@ -105,16 +105,19 @@ class MeiSheActivity : AppCompatActivity() {
             pickVideo()
         }
         btnClip?.setOnClickListener {
-            // Clip First [5s,10s]
+            // Clip First Segment: [5s,10s]
             val clipInfo = TimelineData.instance.clipInfoList[0]
-            clipInfo.trimInUs = 5000000
-            clipInfo.trimOutUs = 10000000
+            clipInfo.trimInUs = 5_000_000
+            clipInfo.trimOutUs = 10_000_000
             TimelineUtil.reBuildVideoTrack(timeline)
             refreshLiveWindowFrame()
         }
         btnSpeed?.setOnClickListener {
-            // Speed First 2x
-
+            // Speed First Segment: 4x
+            val clipInfo = TimelineData.instance.clipInfoList[0]
+            clipInfo.speed = 4.0
+            TimelineUtil.reBuildVideoTrack(timeline)
+            refreshLiveWindowFrame()
         }
     }
 
