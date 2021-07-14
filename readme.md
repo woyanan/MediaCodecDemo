@@ -14,4 +14,4 @@
 - [x] 基本编辑(concat、clip、speed、split、copy、图片预览)<br> 
 - [ ] 转场、特效的结合<br>
 - [ ] 画布编辑操作<br>
-- 收费项目,必剪和splice在用<br>         
+- [ ] 收费项目,必剪和splice在用<br>         
