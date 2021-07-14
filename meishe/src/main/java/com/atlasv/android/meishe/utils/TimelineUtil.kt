@@ -64,14 +64,24 @@ object TimelineUtil {
         for (i in clipInfoList.indices) {
             val clipInfo = clipInfoList[i]
             val videoClip = videoTrack.appendClip(clipInfo.filePath)
-            if (clipInfo.trimInUs > 0) {
-                videoClip.changeTrimInPoint(clipInfo.trimInUs, true)
-            }
-            if (clipInfo.trimOutUs > 0) {
-                videoClip.changeTrimOutPoint(clipInfo.trimOutUs, true)
-            }
-            if (clipInfo.speed > 0) {
-                videoClip.changeSpeed(clipInfo.speed, false)
+            when (videoClip.videoType) {
+                NvsVideoClip.VIDEO_CLIP_TYPE_IMAGE -> {
+                    videoClip.imageMotionAnimationEnabled = false
+                    if (clipInfo.trimOutUs > 0) {
+                        videoClip.changeTrimOutPoint(clipInfo.trimOutUs, true)
+                    }
+                }
+                else -> {
+                    if (clipInfo.trimInUs > 0) {
+                        videoClip.changeTrimInPoint(clipInfo.trimInUs, true)
+                    }
+                    if (clipInfo.trimOutUs > 0) {
+                        videoClip.changeTrimOutPoint(clipInfo.trimOutUs, true)
+                    }
+                    if (clipInfo.speed > 0) {
+                        videoClip.changeSpeed(clipInfo.speed, false)
+                    }
+                }
             }
         }
         for (i in 0 until clipInfoList.size - 1) {

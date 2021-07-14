@@ -30,6 +30,7 @@ class MediaCodecActivity : AppCompatActivity() {
         setContentView(R.layout.activity_video)
         setupMediaCodec()
         ivPlay?.setOnClickListener {
+            decodeThread.pause()
             ivPlay?.setImageResource(if (decodeThread.isPlaying()) R.mipmap.ic_pause else R.mipmap.ic_play)
         }
         seekBar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

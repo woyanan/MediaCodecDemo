@@ -102,7 +102,7 @@ class MeiSheActivity : AppCompatActivity() {
         })
         btnConcat?.setOnClickListener {
             value = Enum.CONCAT
-            pickVideo()
+            pickFile()
         }
         btnClip?.setOnClickListener {
             // Clip First Segment: [5s,10s]
@@ -234,10 +234,9 @@ class MeiSheActivity : AppCompatActivity() {
         }
     }
 
-    private fun pickVideo() {
-        val intent = Intent()
-        intent.type = "video/*"
-        intent.action = Intent.ACTION_GET_CONTENT
+    private fun pickFile() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
         pickVideoLauncher.launch(intent)
     }
 }

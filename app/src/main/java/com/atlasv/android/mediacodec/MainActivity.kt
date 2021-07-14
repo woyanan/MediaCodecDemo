@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat
 import com.atlasv.android.mediacodec.databinding.ActivityMainBinding
 import com.atlasv.android.mediacodec.surfacetexture.MediaCodecActivity
 import com.atlasv.android.mediacodec.surfacetexture.MediaPlayerActivity
-import com.atlasv.android.meishe.utils.CommonUtil
 import com.atlasv.android.meishe.MeiSheActivity
+import com.atlasv.android.meishe.utils.CommonUtil
 
 
 class MainActivity : AppCompatActivity() {
@@ -83,7 +83,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun pickVideo() {
         val intent = Intent()
-        intent.type = "video/*"
+//        intent.type = "video/*"
+        intent.type = "*/*"
         intent.action = Intent.ACTION_GET_CONTENT
         pickVideoLauncher.launch(intent)
     }
