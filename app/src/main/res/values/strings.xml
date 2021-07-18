@@ -3,4 +3,5 @@
     <string name="media_player">MediaPlayer</string>
     <string name="mediacodec">MediaCodec</string>
     <string name="meishe">MeiShe</string>
+    <string name="fbo">FBO</string>
 </resources>
