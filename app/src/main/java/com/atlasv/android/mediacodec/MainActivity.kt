@@ -14,6 +14,7 @@ import com.atlasv.android.mediacodec.databinding.ActivityMainBinding
 import com.atlasv.android.mediacodec.surfacetexture.MediaCodecActivity
 import com.atlasv.android.mediacodec.surfacetexture.MediaPlayerActivity
 import com.atlasv.android.meishe.MeiSheActivity
+import com.atlasv.android.meishe.fbo.MeiSheFBOActivity
 import com.atlasv.android.meishe.fbo.SoulPlayerActivity
 import com.atlasv.android.meishe.utils.CommonUtil
 
@@ -52,7 +53,8 @@ class MainActivity : AppCompatActivity() {
                         MeiSheActivity.start(this, path)
                     }
                     Enum.FBO -> {
-                        SoulPlayerActivity.start(this, path)
+//                        SoulPlayerActivity.start(this, path)
+                        MeiSheFBOActivity.start(this, path)
                     }
                 }
             }

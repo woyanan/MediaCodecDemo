@@ -9,6 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="600dp" />
 
+    <com.meicam.sdk.NvsLiveWindowExt
+        android:id="@+id/liveWindow3"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:visibility="gone" />
+
     <Button
         android:id="@+id/ivPlay"
         android:layout_width="wrap_content"
